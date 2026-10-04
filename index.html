@@ -4,413 +4,509 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ULTRA INSTINCT — KAKAROT</title>
+<title>KAKAROT — POWER AWAKENING</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
-html,body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    font-family:Arial,Helvetica,sans-serif;
-    background:#01030a;
-    color:white;
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-/* COSMIC BACKGROUND */
-
-body{
+body {
+    color: white;
     background:
-        radial-gradient(circle at 50% 45%,
-        #52677d 0%,
-        #172334 18%,
-        #080e19 42%,
-        #010207 78%);
+        radial-gradient(circle at center,
+        #182b43 0%,
+        #09111e 35%,
+        #02040a 70%,
+        #000 100%);
+    transition: background 1s ease;
 }
 
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    background:
-        radial-gradient(circle at 20% 20%,rgba(150,210,255,.12),transparent 25%),
-        radial-gradient(circle at 80% 70%,rgba(100,170,255,.10),transparent 30%);
-    animation:cosmos 5s infinite alternate;
-}
+/* =================================
+   AURA
+================================= */
 
-@keyframes cosmos{
-    from{opacity:.5}
-    to{opacity:1}
-}
+#aura {
+    position: fixed;
+    width: 280px;
+    height: 280px;
 
-/* STARS */
+    left: 50%;
+    top: 50%;
 
-.star{
-    position:fixed;
-    width:2px;
-    height:2px;
-    border-radius:50%;
-    background:white;
-    box-shadow:0 0 8px white;
-    animation:starMove linear infinite;
-}
+    transform: translate(-50%, -50%);
 
-@keyframes starMove{
-    from{
-        transform:translateY(110vh);
-        opacity:0;
-    }
-    15%{opacity:1}
-    to{
-        transform:translateY(-10vh);
-        opacity:0;
-    }
-}
-
-/* AURA */
-
-.aura{
-    position:fixed;
-    width:330px;
-    height:330px;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
-    border-radius:50%;
+    border-radius: 50%;
 
     background:
         radial-gradient(circle,
-        rgba(255,255,255,.95) 0%,
-        rgba(210,240,255,.65) 12%,
-        rgba(120,190,255,.30) 35%,
-        transparent 70%);
+        rgba(255,255,255,.9) 0%,
+        rgba(150,210,255,.5) 18%,
+        rgba(70,150,255,.25) 40%,
+        transparent 72%);
 
-    filter:blur(10px);
+    filter: blur(12px);
 
-    animation:
-        auraPulse 2s infinite alternate,
-        auraRotate 8s linear infinite;
+    opacity: .35;
 
-    opacity:.55;
+    transition:
+        width 1s,
+        height 1s,
+        opacity 1s,
+        filter 1s;
+
+    animation: auraPulse 1.5s infinite alternate;
+
+    pointer-events: none;
 }
 
-@keyframes auraPulse{
-    from{
-        transform:translate(-50%,-50%) scale(.75);
+@keyframes auraPulse {
+    from {
+        transform: translate(-50%, -50%) scale(.85);
     }
-    to{
-        transform:translate(-50%,-50%) scale(1.35);
-    }
-}
 
-@keyframes auraRotate{
-    to{
-        filter:blur(18px) hue-rotate(15deg);
-    }
-}
-
-/* ENERGY RINGS */
-
-.ring{
-    position:fixed;
-    left:50%;
-    top:50%;
-    width:250px;
-    height:250px;
-    border:1px solid rgba(200,235,255,.45);
-    border-radius:50%;
-    transform:translate(-50%,-50%);
-    animation:ring 3s infinite;
-}
-
-.ring:nth-child(2){
-    animation-delay:1s;
-}
-
-.ring:nth-child(3){
-    animation-delay:2s;
-}
-
-@keyframes ring{
-    from{
-        transform:translate(-50%,-50%) scale(.4);
-        opacity:.8;
-    }
-    to{
-        transform:translate(-50%,-50%) scale(3);
-        opacity:0;
+    to {
+        transform: translate(-50%, -50%) scale(1.15);
     }
 }
 
-/* SCREENS */
+/* =================================
+   ENERGY RINGS
+================================= */
 
-.screen{
-    position:relative;
-    z-index:10;
+.ring {
+    position: fixed;
 
-    min-height:100vh;
-    width:100%;
+    left: 50%;
+    top: 50%;
 
-    display:none;
-    align-items:center;
-    justify-content:center;
+    width: 100px;
+    height: 100px;
 
-    padding:20px;
+    border: 2px solid rgba(200,230,255,.5);
+
+    border-radius: 50%;
+
+    transform: translate(-50%, -50%) scale(0);
+
+    pointer-events: none;
+
+    opacity: 0;
 }
 
-.screen.active{
-    display:flex;
+.ring.active {
+    animation: ringExplosion 1s ease-out;
 }
 
-/* CARD */
+@keyframes ringExplosion {
 
-.card{
-    width:min(92vw,520px);
+    0% {
+        transform: translate(-50%, -50%) scale(.2);
+        opacity: .9;
+    }
 
-    padding:35px 25px;
+    100% {
+        transform: translate(-50%, -50%) scale(7);
+        opacity: 0;
+    }
+}
 
-    text-align:center;
+/* =================================
+   STARS / PARTICLES
+================================= */
 
-    border-radius:28px;
+.particle {
+    position: fixed;
+
+    width: 3px;
+    height: 3px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    box-shadow:
+        0 0 8px white,
+        0 0 18px #70bfff;
+
+    pointer-events: none;
+
+    animation: particleMove linear infinite;
+}
+
+@keyframes particleMove {
+
+    from {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(-10vh);
+        opacity: 0;
+    }
+}
+
+/* =================================
+   MAIN
+================================= */
+
+#app {
+    position: relative;
+
+    z-index: 10;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    text-align: center;
+
+    cursor: pointer;
+}
+
+/* =================================
+   CARD
+================================= */
+
+.card {
+
+    width: min(92vw, 500px);
+
+    padding: 30px 22px;
+
+    border-radius: 28px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(30,45,65,.82),
-            rgba(2,5,12,.92)
+            rgba(25,40,60,.85),
+            rgba(2,5,12,.94)
         );
 
-    border:1px solid rgba(220,245,255,.45);
+    border:
+        1px solid rgba(220,245,255,.35);
 
     box-shadow:
-        0 0 30px rgba(100,190,255,.25),
-        inset 0 0 40px rgba(130,210,255,.08);
+        0 0 35px rgba(80,170,255,.2),
+        inset 0 0 35px rgba(100,190,255,.06);
 
-    backdrop-filter:blur(18px);
+    backdrop-filter: blur(15px);
 
-    animation:cardIn .8s ease;
+    transition: .6s;
 }
 
-@keyframes cardIn{
-    from{
-        opacity:0;
-        transform:scale(.8) translateY(30px);
-    }
-    to{
-        opacity:1;
-        transform:scale(1) translateY(0);
-    }
+/* =================================
+   TEXT
+================================= */
+
+.small {
+
+    font-size: 11px;
+
+    letter-spacing: 5px;
+
+    color: #9fc8e8;
+
+    margin-bottom: 15px;
 }
 
-/* TEXT */
+h1 {
 
-.small{
-    font-size:12px;
-    letter-spacing:5px;
-    color:#9ec9e8;
-    margin-bottom:18px;
-}
+    font-size: clamp(38px, 12vw, 70px);
 
-h1{
-    font-size:clamp(45px,13vw,78px);
-    letter-spacing:7px;
-    line-height:.95;
+    line-height: .95;
 
-    color:white;
+    letter-spacing: 5px;
+
+    color: white;
 
     text-shadow:
         0 0 8px white,
-        0 0 20px #c7ecff,
-        0 0 45px #64baff,
-        0 0 80px #338cff;
+        0 0 20px #b9e7ff,
+        0 0 45px #4fa9ff;
+
+    transition: .6s;
 }
 
-h2{
-    margin-top:15px;
-    font-size:25px;
-    letter-spacing:3px;
+h2 {
 
-    color:#dff5ff;
+    margin-top: 12px;
 
-    text-shadow:0 0 15px #64baff;
+    font-size: 21px;
+
+    letter-spacing: 3px;
+
+    color: #dff5ff;
 }
 
-p{
-    margin-top:18px;
+p {
 
-    font-size:17px;
-    line-height:1.7;
+    margin-top: 14px;
 
-    color:#d8e9f5;
+    font-size: 16px;
+
+    line-height: 1.6;
+
+    color: #d2e5f2;
 }
 
-/* SYMBOL */
+/* =================================
+   POWER
+================================= */
 
-.symbol{
-    font-size:75px;
-    margin-bottom:10px;
+#power {
 
-    animation:
-        float 2s infinite ease-in-out,
-        symbolGlow 1.5s infinite alternate;
-}
+    margin-top: 18px;
 
-@keyframes float{
-    0%,100%{
-        transform:translateY(0);
-    }
-    50%{
-        transform:translateY(-12px);
-    }
-}
+    font-size: 42px;
 
-@keyframes symbolGlow{
-    from{
-        filter:drop-shadow(0 0 8px white);
-    }
-    to{
-        filter:
-            drop-shadow(0 0 15px white)
-            drop-shadow(0 0 35px #69baff);
-    }
-}
+    font-weight: bold;
 
-/* BUTTON */
+    letter-spacing: 2px;
 
-button{
-    margin-top:28px;
-
-    padding:15px 25px;
-
-    border:none;
-    border-radius:30px;
-
-    font-size:15px;
-    font-weight:bold;
-
-    color:#06101c;
-
-    background:
-        linear-gradient(
-            135deg,
-            white,
-            #82caff
-        );
-
-    box-shadow:
-        0 0 15px rgba(130,210,255,.6);
-
-    cursor:pointer;
-
-    transition:.25s;
-}
-
-button:active{
-    transform:scale(.92);
-}
-
-button:hover{
-    transform:scale(1.07);
-
-    box-shadow:
-        0 0 35px rgba(190,235,255,1);
-}
-
-/* QUOTE */
-
-.quote{
-    margin-top:25px;
-    padding:20px;
-
-    border-radius:18px;
-
-    background:rgba(120,190,255,.08);
-
-    border:1px solid rgba(160,220,255,.25);
-}
-
-.quote strong{
-    color:white;
-    font-size:21px;
-
-    text-shadow:0 0 12px #65baff;
-}
-
-/* POWER */
-
-.power{
-    margin:20px 0;
-
-    font-size:65px;
-    font-weight:bold;
-
-    color:white;
+    color: white;
 
     text-shadow:
         0 0 10px white,
-        0 0 30px #9ddcff,
-        0 0 70px #388fff;
+        0 0 25px #65baff,
+        0 0 50px #358cff;
 
-    animation:power 1s infinite alternate;
+    transition: .3s;
 }
 
-@keyframes power{
-    from{
-        transform:scale(.95);
+/* =================================
+   PROGRESS BAR
+================================= */
+
+.progressBox {
+
+    margin-top: 20px;
+
+    width: 100%;
+
+    height: 13px;
+
+    background: rgba(255,255,255,.1);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255,255,255,.15);
+}
+
+#progress {
+
+    width: 0%;
+
+    height: 100%;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            white,
+            #72c5ff,
+            #bdeaff
+        );
+
+    box-shadow:
+        0 0 15px #69baff;
+
+    transition: width .3s;
+}
+
+/* =================================
+   TAP TEXT
+================================= */
+
+#tapText {
+
+    margin-top: 20px;
+
+    font-size: 14px;
+
+    color: #a9c7dc;
+
+    letter-spacing: 2px;
+
+    animation: tapPulse 1s infinite alternate;
+}
+
+@keyframes tapPulse {
+
+    from {
+        opacity: .5;
     }
-    to{
-        transform:scale(1.12);
+
+    to {
+        opacity: 1;
     }
 }
 
-/* FINAL */
+/* =================================
+   STAGE
+================================= */
 
-.finalTitle{
-    animation:finalGlow 1s infinite alternate;
+#stage {
+
+    margin-top: 12px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    color: #c9edff;
+
+    text-shadow: 0 0 10px #5cb8ff;
 }
 
-@keyframes finalGlow{
-    from{
+/* =================================
+   TAP FLASH
+================================= */
+
+.flash {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: white;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    z-index: 50;
+}
+
+.flash.active {
+
+    animation: flash .25s ease;
+}
+
+@keyframes flash {
+
+    0% {
+        opacity: .7;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* =================================
+   SHAKE
+================================= */
+
+.shake {
+
+    animation: shake .12s infinite;
+}
+
+@keyframes shake {
+
+    0% {
+        transform: translate(2px, 1px);
+    }
+
+    25% {
+        transform: translate(-2px, 2px);
+    }
+
+    50% {
+        transform: translate(2px, -2px);
+    }
+
+    75% {
+        transform: translate(-2px, -1px);
+    }
+
+    100% {
+        transform: translate(1px, 2px);
+    }
+}
+
+/* =================================
+   FINAL
+================================= */
+
+.final {
+
+    animation: finalGlow 1s infinite alternate;
+}
+
+@keyframes finalGlow {
+
+    from {
         text-shadow:
-        0 0 10px white,
-        0 0 25px #9ddcff;
+            0 0 10px white,
+            0 0 30px #bcecff;
     }
-    to{
+
+    to {
         text-shadow:
-        0 0 15px white,
-        0 0 40px #8bd2ff,
-        0 0 80px #368fff;
+            0 0 15px white,
+            0 0 45px #9cddff,
+            0 0 90px #4a9cff;
     }
 }
 
-/* SHAKE */
+#message {
 
-.shake{
-    animation:shake .07s infinite;
+    margin-top: 18px;
+
+    min-height: 48px;
+
+    color: #dceff9;
 }
 
-@keyframes shake{
-    0%{transform:translate(2px,1px)}
-    25%{transform:translate(-2px,2px)}
-    50%{transform:translate(2px,-2px)}
-    75%{transform:translate(-2px,-1px)}
-    100%{transform:translate(1px,2px)}
-}
+/* =================================
+   RESET
+================================= */
 
-.footer{
-    margin-top:25px;
-    font-size:11px;
-    color:#70899d;
-    letter-spacing:1px;
-}
+#reset {
 
-.hidden{
-    display:none;
+    display: none;
+
+    margin-top: 20px;
+
+    padding: 12px 22px;
+
+    border: 1px solid rgba(255,255,255,.5);
+
+    border-radius: 25px;
+
+    background: rgba(255,255,255,.08);
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
 }
 
 </style>
@@ -418,382 +514,479 @@ button:hover{
 
 <body>
 
-<!-- AURA -->
+<div id="aura"></div>
 
-<div class="aura"></div>
+<div class="ring" id="ring1"></div>
+<div class="ring" id="ring2"></div>
 
-<div class="ring"></div>
-<div class="ring"></div>
-<div class="ring"></div>
+<div class="flash" id="flash"></div>
 
-<!-- STARS -->
+<div id="app">
 
-<script>
+    <div class="card" id="card">
 
-for(let i=0;i<120;i++){
+        <div class="small">
+            KAKAROT'S POWER AWAKENING
+        </div>
 
-    const star=document.createElement("div");
+        <h1 id="title">
+            TAP TO<br>AWAKEN
+        </h1>
 
-    star.className="star";
+        <h2 id="subtitle">
+            YOUR POWER IS WAITING
+        </h2>
 
-    star.style.left=Math.random()*100+"vw";
+        <div id="power">
+            POWER: 0
+        </div>
 
-    star.style.animationDuration=
-        (2+Math.random()*6)+"s";
+        <div id="stage">
+            BASE FORM
+        </div>
 
-    star.style.animationDelay=
-        Math.random()*5+"s";
+        <div class="progressBox">
+            <div id="progress"></div>
+        </div>
 
-    star.style.opacity=
-        Math.random();
+        <div id="message">
+            Something inside you is waiting to be released...
+        </div>
 
-    document.body.appendChild(star);
-}
+        <div id="tapText">
+            TAP ANYWHERE TO POWER UP ⚡
+        </div>
 
-</script>
+        <button id="reset">
+            AWAKEN AGAIN
+        </button>
 
-
-<!-- SCREEN 1 -->
-
-<section class="screen active" id="screen1">
-
-<div class="card">
-
-<div class="symbol">✦</div>
-
-<div class="small">
-A MESSAGE FROM YOUR BRO
-</div>
-
-<h1>ARE YOU<br>READY?</h1>
-
-<p>
-Something inside you is about to awaken.
-</p>
-
-<p>
-But once it begins...
-there is no going back.
-</p>
-
-<button onclick="next(2)">
-ENTER THE VOID ⚡
-</button>
-
-<div class="footer">
-The mind must become silent.
-</div>
+    </div>
 
 </div>
-
-</section>
-
-
-<!-- SCREEN 2 -->
-
-<section class="screen" id="screen2">
-
-<div class="card">
-
-<div class="symbol">☯</div>
-
-<div class="small">
-THE FIRST RULE
-</div>
-
-<h2>EMPTY YOUR MIND</h2>
-
-<p>
-Forget fear.
-</p>
-
-<p>
-Forget hesitation.
-</p>
-
-<p>
-Forget overthinking.
-</p>
-
-<div class="quote">
-
-<strong>
-MOVE WITHOUT THINKING.
-</strong>
-
-<p>
-Your body knows what to do
-before your mind can react.
-</p>
-
-</div>
-
-<button onclick="next(3)">
-LET THE INSTINCT AWAKEN 🔥
-</button>
-
-</div>
-
-</section>
-
-
-<!-- SCREEN 3 -->
-
-<section class="screen" id="screen3">
-
-<div class="card">
-
-<div class="symbol">⚡</div>
-
-<div class="small">
-LIMITER DETECTED
-</div>
-
-<h2>POWER RISING</h2>
-
-<p>
-The pressure is increasing...
-</p>
-
-<div class="power">
-99%
-</div>
-
-<p>
-One final step remains.
-</p>
-
-<button onclick="transform()">
-BREAK THE LIMIT ⚡
-</button>
-
-</div>
-
-</section>
-
-
-<!-- SCREEN 4 -->
-
-<section class="screen" id="screen4">
-
-<div class="card">
-
-<div class="symbol">✧</div>
-
-<div class="small">
-THE SILVER AURA
-</div>
-
-<h1 class="finalTitle">
-ULTRA<br>INSTINCT
-</h1>
-
-<h2>MASTERED</h2>
-
-<div class="power">
-∞
-</div>
-
-<p>
-The mind is silent.
-<br>
-The body moves automatically.
-<br>
-The impossible becomes normal.
-</p>
-
-<div class="quote">
-
-<strong>
-KAKAROT HAS AWAKENED.
-</strong>
-
-<p>
-Speed — Instinctive ⚡<br>
-Reflexes — Automatic ⚡<br>
-Fear — 0%<br>
-Limits — Broken
-</p>
-
-</div>
-
-<button onclick="next(5)">
-ONE LAST MESSAGE 👊
-</button>
-
-</div>
-
-</section>
-
-
-<!-- SCREEN 5 -->
-
-<section class="screen" id="screen5">
-
-<div class="card">
-
-<div class="symbol">👊</div>
-
-<div class="small">
-FROM YOUR BRO
-</div>
-
-<h2>REMEMBER THIS</h2>
-
-<div class="quote">
-
-<p>
-No matter how difficult things get,
-never stop moving forward.
-</p>
-
-<p>
-Fall down.
-Get back up.
-Train harder.
-Become stronger.
-</p>
-
-<p>
-And when everyone thinks
-you've reached your limit...
-</p>
-
-<strong>
-BREAK IT AGAIN. 🔥
-</strong>
-
-</div>
-
-<p style="margin-top:25px;">
-This little website was made
-just for you, bro. ❤️
-</p>
-
-<button onclick="restart()">
-AWAKEN AGAIN 😎
-</button>
-
-<div class="footer">
-ULTRA INSTINCT • KAKAROT
-</div>
-
-</div>
-
-</section>
 
 
 <script>
 
-/* SCREEN CONTROL */
+/* ==========================================
+   CREATE PARTICLES
+========================================== */
 
-function next(number){
+for (let i = 0; i < 100; i++) {
 
-    document
-    .querySelectorAll(".screen")
-    .forEach(screen=>{
-        screen.classList.remove("active");
-    });
+    const particle = document.createElement("div");
 
-    document
-    .getElementById("screen"+number)
-    .classList.add("active");
+    particle.className = "particle";
+
+    particle.style.left =
+        Math.random() * 100 + "vw";
+
+    particle.style.animationDuration =
+        (2 + Math.random() * 6) + "s";
+
+    particle.style.animationDelay =
+        Math.random() * 5 + "s";
+
+    document.body.appendChild(particle);
 }
 
 
-/* TRANSFORMATION */
+/* ==========================================
+   ELEMENTS
+========================================== */
 
-function transform(){
+const app =
+    document.getElementById("app");
 
-    document.body.classList.add("shake");
+const card =
+    document.getElementById("card");
 
-    createExplosion();
+const title =
+    document.getElementById("title");
 
-    setTimeout(()=>{
+const subtitle =
+    document.getElementById("subtitle");
 
-        document.body.classList.remove("shake");
+const power =
+    document.getElementById("power");
 
-        next(4);
+const stage =
+    document.getElementById("stage");
 
-    },1500);
+const message =
+    document.getElementById("message");
+
+const progress =
+    document.getElementById("progress");
+
+const tapText =
+    document.getElementById("tapText");
+
+const aura =
+    document.getElementById("aura");
+
+const flash =
+    document.getElementById("flash");
+
+const reset =
+    document.getElementById("reset");
+
+const ring1 =
+    document.getElementById("ring1");
+
+const ring2 =
+    document.getElementById("ring2");
+
+
+/* ==========================================
+   GAME SETTINGS
+========================================== */
+
+let taps = 0;
+
+const maxTaps = 25;
+
+
+/* ==========================================
+   POWER STAGES
+========================================== */
+
+const stages = [
+
+    {
+        tap: 0,
+        name: "BASE FORM",
+        title: "KAKAROT",
+        subtitle: "THE POWER IS SLEEPING",
+        power: "POWER: 1,000",
+        message:
+        "Something inside you is waiting to be released..."
+    },
+
+    {
+        tap: 3,
+        name: "POWER SURGE",
+        title: "POWER",
+        subtitle: "THE ENERGY RISES",
+        power: "POWER: 5,000",
+        message:
+        "You can feel the energy beginning to move."
+    },
+
+    {
+        tap: 6,
+        name: "SUPER SAIYAN",
+        title: "SUPER",
+        subtitle: "THE FIRST TRANSFORMATION",
+        power: "POWER: 50,000",
+        message:
+        "The first limit has been broken."
+    },
+
+    {
+        tap: 10,
+        name: "SUPER SAIYAN 2",
+        title: "LIMIT",
+        subtitle: "THE LIGHTNING AWAKENS",
+        power: "POWER: 250,000",
+        message:
+        "Your power is becoming something extraordinary."
+    },
+
+    {
+        tap: 14,
+        name: "SUPER SAIYAN 3",
+        title: "OVERDRIVE",
+        subtitle: "POWER WITHOUT LIMIT",
+        power: "POWER: 1,000,000",
+        message:
+        "The pressure is becoming impossible to contain."
+    },
+
+    {
+        tap: 18,
+        name: "GOD POWER",
+        title: "DIVINE",
+        subtitle: "THE GODLY ENERGY AWAKENS",
+        power: "POWER: 10,000,000",
+        message:
+        "Your energy has crossed into another realm."
+    },
+
+    {
+        tap: 21,
+        name: "SUPER SAIYAN BLUE",
+        title: "BLUE",
+        subtitle: "PERFECT POWER",
+        power: "POWER: 100,000,000",
+        message:
+        "Power alone isn't enough anymore..."
+    },
+
+    {
+        tap: 23,
+        name: "ULTRA INSTINCT — SIGN",
+        title: "INSTINCT",
+        subtitle: "THE BODY MOVES ON ITS OWN",
+        power: "POWER: ???",
+        message:
+        "Stop thinking. Let instinct take control."
+    },
+
+    {
+        tap: 24,
+        name: "ULTRA INSTINCT",
+        title: "AWAKENING",
+        subtitle: "THE SILVER AURA",
+        power: "POWER: UNMEASURABLE",
+        message:
+        "One final step remains..."
+    },
+
+    {
+        tap: 25,
+        name: "MASTERED ULTRA INSTINCT",
+        title: "ULTRA<br>INSTINCT",
+        subtitle: "MASTERED",
+        power: "∞",
+        message:
+        "YOU BROKE EVERY LIMIT. THE IMPOSSIBLE HAS BEEN AWAKENED."
+    }
+
+];
+
+
+/* ==========================================
+   GET CURRENT STAGE
+========================================== */
+
+function getStage() {
+
+    let current = stages[0];
+
+    for (const s of stages) {
+
+        if (taps >= s.tap) {
+            current = s;
+        }
+
+    }
+
+    return current;
 }
 
 
-/* ENERGY EXPLOSION */
+/* ==========================================
+   UPDATE WEBSITE
+========================================== */
 
-function createExplosion(){
+function update() {
 
-    for(let i=0;i<140;i++){
+    const current = getStage();
 
-        const particle=document.createElement("div");
+    title.innerHTML =
+        current.title;
 
-        particle.style.position="fixed";
-        particle.style.left="50%";
-        particle.style.top="50%";
+    subtitle.textContent =
+        current.subtitle;
 
-        particle.style.width=
-            (2+Math.random()*5)+"px";
+    power.textContent =
+        current.power;
 
-        particle.style.height=
-            particle.style.width;
+    stage.textContent =
+        current.name;
 
-        particle.style.borderRadius="50%";
+    message.textContent =
+        current.message;
 
-        particle.style.background="white";
+    progress.style.width =
+        (taps / maxTaps * 100) + "%";
 
-        particle.style.boxShadow=
-            "0 0 12px #9ddcff, 0 0 25px #4aa8ff";
 
-        particle.style.zIndex="100";
+    /* AURA GETS STRONGER */
 
-        document.body.appendChild(particle);
+    const auraSize =
+        280 + (taps * 20);
 
-        const angle=
-            Math.random()*Math.PI*2;
+    aura.style.width =
+        auraSize + "px";
 
-        const distance=
-            150+Math.random()*650;
+    aura.style.height =
+        auraSize + "px";
 
-        particle.animate(
+    aura.style.opacity =
+        .35 + (taps / maxTaps * .65);
 
-            [
-                {
-                    transform:"translate(-50%,-50%) scale(1)",
-                    opacity:1
-                },
 
-                {
-                    transform:
-                    `translate(
-                    ${Math.cos(angle)*distance}px,
-                    ${Math.sin(angle)*distance}px
-                    ) scale(0)`,
+    /* MORE POWER = MORE GLOW */
 
-                    opacity:0
-                }
-            ],
+    title.style.transform =
+        "scale(" +
+        (1 + taps * .008) +
+        ")";
 
-            {
-                duration:700+Math.random()*900,
-                easing:"cubic-bezier(.1,.8,.2,1)"
-            }
 
-        );
+    /* SPECIAL STAGES */
 
-        setTimeout(()=>{
-            particle.remove();
-        },1800);
+    if (taps >= 18) {
+
+        aura.style.filter =
+            "blur(18px)";
+
+    }
+
+    if (taps >= 23) {
+
+        document.body.style.background =
+        "radial-gradient(circle at center,#40566b 0%,#111c2d 30%,#02050c 70%,#000 100%)";
+
+    }
+
+
+    if (taps >= 24) {
+
+        title.classList.add("final");
+
+    }
+
+
+    if (taps === 25) {
+
+        finalTransformation();
+
     }
 }
 
 
-/* RESTART */
+/* ==========================================
+   TAP EFFECT
+========================================== */
 
-function restart(){
-    next(1);
+function tapEffect() {
+
+    flash.classList.remove("active");
+
+    void flash.offsetWidth;
+
+    flash.classList.add("active");
+
+
+    ring1.classList.remove("active");
+
+    ring2.classList.remove("active");
+
+    void ring1.offsetWidth;
+
+    ring1.classList.add("active");
+
+    setTimeout(() => {
+
+        ring2.classList.add("active");
+
+    }, 120);
+
+
+    card.classList.remove("shake");
+
+    void card.offsetWidth;
+
+    card.classList.add("shake");
+
+
+    setTimeout(() => {
+
+        card.classList.remove("shake");
+
+    }, 140);
+
 }
+
+
+/* ==========================================
+   FINAL TRANSFORMATION
+========================================== */
+
+function finalTransformation() {
+
+    document.body.classList.add("shake");
+
+    title.classList.add("final");
+
+    tapText.textContent =
+        "ULTRA INSTINCT HAS BEEN MASTERED ⚡";
+
+    message.textContent =
+        "KAKAROT HAS TRANSCENDED EVERY LIMIT. 👊";
+
+    setTimeout(() => {
+
+        document.body.classList.remove("shake");
+
+    }, 1500);
+
+    reset.style.display =
+        "inline-block";
+}
+
+
+/* ==========================================
+   TAP ANYWHERE
+========================================== */
+
+app.addEventListener("click", function(e) {
+
+    /* Don't count reset button as a power tap */
+
+    if (e.target === reset) {
+        return;
+    }
+
+    if (taps >= maxTaps) {
+        return;
+    }
+
+    taps++;
+
+    tapEffect();
+
+    update();
+
+});
+
+
+/* ==========================================
+   RESET
+========================================== */
+
+reset.addEventListener("click", function(e) {
+
+    e.stopPropagation();
+
+    taps = 0;
+
+    reset.style.display =
+        "none";
+
+    title.classList.remove("final");
+
+    tapText.textContent =
+        "TAP ANYWHERE TO POWER UP ⚡";
+
+    document.body.style.background =
+        "radial-gradient(circle at center,#182b43 0%,#09111e 35%,#02040a 70%,#000 100%)";
+
+    update();
+
+});
+
+
+/* ==========================================
+   INITIAL
+========================================== */
+
+update();
 
 </script>
 
 </body>
-  </html>
+    </html>
