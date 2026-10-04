@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ULTRA INSTINCT — KAKAROT</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#01030a;
+    color:white;
+}
+
+/* COSMIC BACKGROUND */
+
+body{
+    background:
+        radial-gradient(circle at 50% 45%,
+        #52677d 0%,
+        #172334 18%,
+        #080e19 42%,
+        #010207 78%);
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at 20% 20%,rgba(150,210,255,.12),transparent 25%),
+        radial-gradient(circle at 80% 70%,rgba(100,170,255,.10),transparent 30%);
+    animation:cosmos 5s infinite alternate;
+}
+
+@keyframes cosmos{
+    from{opacity:.5}
+    to{opacity:1}
+}
+
+/* STARS */
+
+.star{
+    position:fixed;
+    width:2px;
+    height:2px;
+    border-radius:50%;
+    background:white;
+    box-shadow:0 0 8px white;
+    animation:starMove linear infinite;
+}
+
+@keyframes starMove{
+    from{
+        transform:translateY(110vh);
+        opacity:0;
+    }
+    15%{opacity:1}
+    to{
+        transform:translateY(-10vh);
+        opacity:0;
+    }
+}
+
+/* AURA */
+
+.aura{
+    position:fixed;
+    width:330px;
+    height:330px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+
+    background:
+        radial-gradient(circle,
+        rgba(255,255,255,.95) 0%,
+        rgba(210,240,255,.65) 12%,
+        rgba(120,190,255,.30) 35%,
+        transparent 70%);
+
+    filter:blur(10px);
+
+    animation:
+        auraPulse 2s infinite alternate,
+        auraRotate 8s linear infinite;
+
+    opacity:.55;
+}
+
+@keyframes auraPulse{
+    from{
+        transform:translate(-50%,-50%) scale(.75);
+    }
+    to{
+        transform:translate(-50%,-50%) scale(1.35);
+    }
+}
+
+@keyframes auraRotate{
+    to{
+        filter:blur(18px) hue-rotate(15deg);
+    }
+}
+
+/* ENERGY RINGS */
+
+.ring{
+    position:fixed;
+    left:50%;
+    top:50%;
+    width:250px;
+    height:250px;
+    border:1px solid rgba(200,235,255,.45);
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    animation:ring 3s infinite;
+}
+
+.ring:nth-child(2){
+    animation-delay:1s;
+}
+
+.ring:nth-child(3){
+    animation-delay:2s;
+}
+
+@keyframes ring{
+    from{
+        transform:translate(-50%,-50%) scale(.4);
+        opacity:.8;
+    }
+    to{
+        transform:translate(-50%,-50%) scale(3);
+        opacity:0;
+    }
+}
+
+/* SCREENS */
+
+.screen{
+    position:relative;
+    z-index:10;
+
+    min-height:100vh;
+    width:100%;
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+}
+
+.screen.active{
+    display:flex;
+}
+
+/* CARD */
+
+.card{
+    width:min(92vw,520px);
+
+    padding:35px 25px;
+
+    text-align:center;
+
+    border-radius:28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30,45,65,.82),
+            rgba(2,5,12,.92)
+        );
+
+    border:1px solid rgba(220,245,255,.45);
+
+    box-shadow:
+        0 0 30px rgba(100,190,255,.25),
+        inset 0 0 40px rgba(130,210,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    animation:cardIn .8s ease;
+}
+
+@keyframes cardIn{
+    from{
+        opacity:0;
+        transform:scale(.8) translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:scale(1) translateY(0);
+    }
+}
+
+/* TEXT */
+
+.small{
+    font-size:12px;
+    letter-spacing:5px;
+    color:#9ec9e8;
+    margin-bottom:18px;
+}
+
+h1{
+    font-size:clamp(45px,13vw,78px);
+    letter-spacing:7px;
+    line-height:.95;
+
+    color:white;
+
+    text-shadow:
+        0 0 8px white,
+        0 0 20px #c7ecff,
+        0 0 45px #64baff,
+        0 0 80px #338cff;
+}
+
+h2{
+    margin-top:15px;
+    font-size:25px;
+    letter-spacing:3px;
+
+    color:#dff5ff;
+
+    text-shadow:0 0 15px #64baff;
+}
+
+p{
+    margin-top:18px;
+
+    font-size:17px;
+    line-height:1.7;
+
+    color:#d8e9f5;
+}
+
+/* SYMBOL */
+
+.symbol{
+    font-size:75px;
+    margin-bottom:10px;
+
+    animation:
+        float 2s infinite ease-in-out,
+        symbolGlow 1.5s infinite alternate;
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-12px);
+    }
+}
+
+@keyframes symbolGlow{
+    from{
+        filter:drop-shadow(0 0 8px white);
+    }
+    to{
+        filter:
+            drop-shadow(0 0 15px white)
+            drop-shadow(0 0 35px #69baff);
+    }
+}
+
+/* BUTTON */
+
+button{
+    margin-top:28px;
+
+    padding:15px 25px;
+
+    border:none;
+    border-radius:30px;
+
+    font-size:15px;
+    font-weight:bold;
+
+    color:#06101c;
+
+    background:
+        linear-gradient(
+            135deg,
+            white,
+            #82caff
+        );
+
+    box-shadow:
+        0 0 15px rgba(130,210,255,.6);
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+button:active{
+    transform:scale(.92);
+}
+
+button:hover{
+    transform:scale(1.07);
+
+    box-shadow:
+        0 0 35px rgba(190,235,255,1);
+}
+
+/* QUOTE */
+
+.quote{
+    margin-top:25px;
+    padding:20px;
+
+    border-radius:18px;
+
+    background:rgba(120,190,255,.08);
+
+    border:1px solid rgba(160,220,255,.25);
+}
+
+.quote strong{
+    color:white;
+    font-size:21px;
+
+    text-shadow:0 0 12px #65baff;
+}
+
+/* POWER */
+
+.power{
+    margin:20px 0;
+
+    font-size:65px;
+    font-weight:bold;
+
+    color:white;
+
+    text-shadow:
+        0 0 10px white,
+        0 0 30px #9ddcff,
+        0 0 70px #388fff;
+
+    animation:power 1s infinite alternate;
+}
+
+@keyframes power{
+    from{
+        transform:scale(.95);
+    }
+    to{
+        transform:scale(1.12);
+    }
+}
+
+/* FINAL */
+
+.finalTitle{
+    animation:finalGlow 1s infinite alternate;
+}
+
+@keyframes finalGlow{
+    from{
+        text-shadow:
+        0 0 10px white,
+        0 0 25px #9ddcff;
+    }
+    to{
+        text-shadow:
+        0 0 15px white,
+        0 0 40px #8bd2ff,
+        0 0 80px #368fff;
+    }
+}
+
+/* SHAKE */
+
+.shake{
+    animation:shake .07s infinite;
+}
+
+@keyframes shake{
+    0%{transform:translate(2px,1px)}
+    25%{transform:translate(-2px,2px)}
+    50%{transform:translate(2px,-2px)}
+    75%{transform:translate(-2px,-1px)}
+    100%{transform:translate(1px,2px)}
+}
+
+.footer{
+    margin-top:25px;
+    font-size:11px;
+    color:#70899d;
+    letter-spacing:1px;
+}
+
+.hidden{
+    display:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- AURA -->
+
+<div class="aura"></div>
+
+<div class="ring"></div>
+<div class="ring"></div>
+<div class="ring"></div>
+
+<!-- STARS -->
+
+<script>
+
+for(let i=0;i<120;i++){
+
+    const star=document.createElement("div");
+
+    star.className="star";
+
+    star.style.left=Math.random()*100+"vw";
+
+    star.style.animationDuration=
+        (2+Math.random()*6)+"s";
+
+    star.style.animationDelay=
+        Math.random()*5+"s";
+
+    star.style.opacity=
+        Math.random();
+
+    document.body.appendChild(star);
+}
+
+</script>
+
+
+<!-- SCREEN 1 -->
+
+<section class="screen active" id="screen1">
+
+<div class="card">
+
+<div class="symbol">✦</div>
+
+<div class="small">
+A MESSAGE FROM YOUR BRO
+</div>
+
+<h1>ARE YOU<br>READY?</h1>
+
+<p>
+Something inside you is about to awaken.
+</p>
+
+<p>
+But once it begins...
+there is no going back.
+</p>
+
+<button onclick="next(2)">
+ENTER THE VOID ⚡
+</button>
+
+<div class="footer">
+The mind must become silent.
+</div>
+
+</div>
+
+</section>
+
+
+<!-- SCREEN 2 -->
+
+<section class="screen" id="screen2">
+
+<div class="card">
+
+<div class="symbol">☯</div>
+
+<div class="small">
+THE FIRST RULE
+</div>
+
+<h2>EMPTY YOUR MIND</h2>
+
+<p>
+Forget fear.
+</p>
+
+<p>
+Forget hesitation.
+</p>
+
+<p>
+Forget overthinking.
+</p>
+
+<div class="quote">
+
+<strong>
+MOVE WITHOUT THINKING.
+</strong>
+
+<p>
+Your body knows what to do
+before your mind can react.
+</p>
+
+</div>
+
+<button onclick="next(3)">
+LET THE INSTINCT AWAKEN 🔥
+</button>
+
+</div>
+
+</section>
+
+
+<!-- SCREEN 3 -->
+
+<section class="screen" id="screen3">
+
+<div class="card">
+
+<div class="symbol">⚡</div>
+
+<div class="small">
+LIMITER DETECTED
+</div>
+
+<h2>POWER RISING</h2>
+
+<p>
+The pressure is increasing...
+</p>
+
+<div class="power">
+99%
+</div>
+
+<p>
+One final step remains.
+</p>
+
+<button onclick="transform()">
+BREAK THE LIMIT ⚡
+</button>
+
+</div>
+
+</section>
+
+
+<!-- SCREEN 4 -->
+
+<section class="screen" id="screen4">
+
+<div class="card">
+
+<div class="symbol">✧</div>
+
+<div class="small">
+THE SILVER AURA
+</div>
+
+<h1 class="finalTitle">
+ULTRA<br>INSTINCT
+</h1>
+
+<h2>MASTERED</h2>
+
+<div class="power">
+∞
+</div>
+
+<p>
+The mind is silent.
+<br>
+The body moves automatically.
+<br>
+The impossible becomes normal.
+</p>
+
+<div class="quote">
+
+<strong>
+KAKAROT HAS AWAKENED.
+</strong>
+
+<p>
+Speed — Instinctive ⚡<br>
+Reflexes — Automatic ⚡<br>
+Fear — 0%<br>
+Limits — Broken
+</p>
+
+</div>
+
+<button onclick="next(5)">
+ONE LAST MESSAGE 👊
+</button>
+
+</div>
+
+</section>
+
+
+<!-- SCREEN 5 -->
+
+<section class="screen" id="screen5">
+
+<div class="card">
+
+<div class="symbol">👊</div>
+
+<div class="small">
+FROM YOUR BRO
+</div>
+
+<h2>REMEMBER THIS</h2>
+
+<div class="quote">
+
+<p>
+No matter how difficult things get,
+never stop moving forward.
+</p>
+
+<p>
+Fall down.
+Get back up.
+Train harder.
+Become stronger.
+</p>
+
+<p>
+And when everyone thinks
+you've reached your limit...
+</p>
+
+<strong>
+BREAK IT AGAIN. 🔥
+</strong>
+
+</div>
+
+<p style="margin-top:25px;">
+This little website was made
+just for you, bro. ❤️
+</p>
+
+<button onclick="restart()">
+AWAKEN AGAIN 😎
+</button>
+
+<div class="footer">
+ULTRA INSTINCT • KAKAROT
+</div>
+
+</div>
+
+</section>
+
+
+<script>
+
+/* SCREEN CONTROL */
+
+function next(number){
+
+    document
+    .querySelectorAll(".screen")
+    .forEach(screen=>{
+        screen.classList.remove("active");
+    });
+
+    document
+    .getElementById("screen"+number)
+    .classList.add("active");
+}
+
+
+/* TRANSFORMATION */
+
+function transform(){
+
+    document.body.classList.add("shake");
+
+    createExplosion();
+
+    setTimeout(()=>{
+
+        document.body.classList.remove("shake");
+
+        next(4);
+
+    },1500);
+}
+
+
+/* ENERGY EXPLOSION */
+
+function createExplosion(){
+
+    for(let i=0;i<140;i++){
+
+        const particle=document.createElement("div");
+
+        particle.style.position="fixed";
+        particle.style.left="50%";
+        particle.style.top="50%";
+
+        particle.style.width=
+            (2+Math.random()*5)+"px";
+
+        particle.style.height=
+            particle.style.width;
+
+        particle.style.borderRadius="50%";
+
+        particle.style.background="white";
+
+        particle.style.boxShadow=
+            "0 0 12px #9ddcff, 0 0 25px #4aa8ff";
+
+        particle.style.zIndex="100";
+
+        document.body.appendChild(particle);
+
+        const angle=
+            Math.random()*Math.PI*2;
+
+        const distance=
+            150+Math.random()*650;
+
+        particle.animate(
+
+            [
+                {
+                    transform:"translate(-50%,-50%) scale(1)",
+                    opacity:1
+                },
+
+                {
+                    transform:
+                    `translate(
+                    ${Math.cos(angle)*distance}px,
+                    ${Math.sin(angle)*distance}px
+                    ) scale(0)`,
+
+                    opacity:0
+                }
+            ],
+
+            {
+                duration:700+Math.random()*900,
+                easing:"cubic-bezier(.1,.8,.2,1)"
+            }
+
+        );
+
+        setTimeout(()=>{
+            particle.remove();
+        },1800);
+    }
+}
+
+
+/* RESTART */
+
+function restart(){
+    next(1);
+}
+
+</script>
+
+</body>
+  </html>
